@@ -1,6 +1,14 @@
 # 🛡️ CyberArena
 
-CyberArena is a polished, interactive cybersecurity learning platform designed for safe, educational exploration of common web vulnerabilities. It combines a modern dark-themed interface, guided attack labs, defensive explanations, and an AI-powered mentor to help learners understand web security without touching real systems.
+CyberArena is a full-stack cybersecurity learning platform for safe, educational exploration of web vulnerabilities. It combines a modern dark-themed interface, interactive labs, defensive explanations, progress tracking, and an AI-powered mentor to help learners understand security concepts without touching real systems.
+
+## 📌 Project Summary
+
+This project demonstrates a complete web application experience with:
+- a React/Vite frontend,
+- an Express backend,
+- a FastAPI AI assistant,
+- and a polished learning flow for cybersecurity topics.
 
 ## ✨ Features
 
@@ -25,6 +33,16 @@ CyberArena is a polished, interactive cybersecurity learning platform designed f
 - docs/ – Supporting documentation
 
 ## ▶️ Installation
+
+### Quick start
+
+Run the project with one command from the root:
+
+```powershell
+powershell -ExecutionPolicy Bypass -File .\start-all.ps1
+```
+
+### Manual start
 
 1. Frontend
    - cd frontend

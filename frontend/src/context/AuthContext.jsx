@@ -1,7 +1,7 @@
 import { createContext, useContext, useEffect, useMemo, useState } from 'react';
 
 const AuthContext = createContext(null);
-const API_BASE = 'http://localhost:5000';
+const API_BASE = import.meta.env.VITE_API_BASE || '';
 
 export function AuthProvider({ children }) {
   const [user, setUser] = useState(null);
@@ -34,31 +34,39 @@ export function AuthProvider({ children }) {
   }, [token]);
 
   const login = async (email, password) => {
-    const response = await fetch(`${API_BASE}/api/auth/login`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ email, password })
-    });
-    const payload = await response.json();
-    if (!response.ok) throw new Error(payload.message || 'Login failed');
-    localStorage.setItem('cyberarena-token', payload.token);
-    setToken(payload.token);
-    setUser(payload.user);
-    return payload;
+    try {
+      const response = await fetch(`${API_BASE}/api/auth/login`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, password })
+      });
+      const payload = await response.json();
+      if (!response.ok) throw new Error(payload.message || 'Login failed');
+      localStorage.setItem('cyberarena-token', payload.token);
+      setToken(payload.token);
+      setUser(payload.user);
+      return payload;
+    } catch (error) {
+      throw new Error(error.message || 'Unable to reach the CyberArena backend. Make sure it is running.');
+    }
   };
 
   const register = async (name, email, password) => {
-    const response = await fetch(`${API_BASE}/api/auth/register`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ name, email, password })
-    });
-    const payload = await response.json();
-    if (!response.ok) throw new Error(payload.message || 'Registration failed');
-    localStorage.setItem('cyberarena-token', payload.token);
-    setToken(payload.token);
-    setUser(payload.user);
-    return payload;
+    try {
+      const response = await fetch(`${API_BASE}/api/auth/register`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name, email, password })
+      });
+      const payload = await response.json();
+      if (!response.ok) throw new Error(payload.message || 'Registration failed');
+      localStorage.setItem('cyberarena-token', payload.token);
+      setToken(payload.token);
+      setUser(payload.user);
+      return payload;
+    } catch (error) {
+      throw new Error(error.message || 'Unable to reach the CyberArena backend. Make sure it is running.');
+    }
   };
 
   const logout = () => {

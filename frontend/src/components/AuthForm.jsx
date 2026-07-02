@@ -1,7 +1,9 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 
 export default function AuthForm() {
+  const navigate = useNavigate();
   const { login, register } = useAuth();
   const [mode, setMode] = useState('login');
   const [name, setName] = useState('');
@@ -17,10 +19,12 @@ export default function AuthForm() {
     try {
       if (mode === 'login') {
         await login(email, password);
-        setMessage('Login successful.');
+        setMessage('Login successful. Redirecting…');
+        setTimeout(() => navigate('/dashboard'), 500);
       } else {
         await register(name, email, password);
-        setMessage('Account created successfully.');
+        setMessage('Account created successfully. Redirecting…');
+        setTimeout(() => navigate('/dashboard'), 500);
       }
     } catch (err) {
       setError(err.message || 'Authentication error');

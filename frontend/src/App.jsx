@@ -9,7 +9,7 @@ import LabPanel from './components/LabPanel';
 import AdminPanel from './components/AdminPanel';
 import ProtectedRoute from './components/ProtectedRoute';
 
-const API_BASE = 'http://localhost:5000';
+const API_BASE = import.meta.env.VITE_API_BASE || '';
 
 const navItems = [
   { to: '/', label: 'Home', icon: ShieldCheck },
@@ -319,7 +319,7 @@ function AIPage() {
 
   const askAssistant = async () => {
     setLoading(true);
-    const response = await fetch('http://localhost:5000/api/ai/assist', {
+    const response = await fetch(`${API_BASE}/api/ai/assist`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ question })
